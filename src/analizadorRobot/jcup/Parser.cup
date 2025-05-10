@@ -1,0 +1,100 @@
+package analizadorRobot.jcup;
+
+import java_cup.runtime.*;
+import analizadorRobot.TablaSimbolo;
+
+/* Código de parser */
+parser code {:
+    // Tabla de símbolos para seguimiento de variables y métodos
+    private TablaSimbolo TablaSimbolo = new TablaSimbolo();
+    
+    // Método para manejar errores sintácticos
+    public void syntax_error(Symbol s) {
+        System.out.println("Error sintáctico en línea " + (s.left+1) + ", columna " + (s.right+1) + 
+                           ": Símbolo inesperado \"" + s.value + "\"");
+    }
+
+    // Método para manejar errores sintácticos fatales
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception {
+        System.out.println("Error sintáctico fatal en línea " + (s.left+1) + ", columna " + (s.right+1) + 
+                           ": Símbolo inesperado \"" + s.value + "\"");
+    }
+    
+    // Método para obtener la tabla de símbolos
+    public TablaSimbolo getTablaSimbolo() {
+        return TablaSimbolo;
+    }
+:}
+
+/* Terminales (tokens del analizador léxico) */
+terminal ROBOT, INICIAR, DETENER;
+terminal BASE, CUERPO, GARRA, VELOCIDAD;
+terminal ABRIR_GARRA, CERRAR_GARRA, REPETIR;
+terminal PUNTO, IGUAL, PARENTESIS_A, PARENTESIS_C, LLAVE_A, LLAVE_C, COMA, PUNTO_COMA;
+terminal String IDENTIFICADOR;
+terminal Integer NUMERO;
+terminal ERROR;
+
+/* No terminales */
+non terminal programa;
+non terminal instrucciones, instruccion;
+non terminal declaracion_robot;
+non terminal accion_robot;
+non terminal asignacion_parametro;
+non terminal llamada_metodo;
+non terminal bloque_repeticion;
+non terminal instrucciones_repeticion;
+
+/* Precedencias */
+precedence left IGUAL;
+precedence left PUNTO;
+
+/* Reglas gramaticales */
+start with programa;
+
+programa ::= instrucciones
+           ;
+
+instrucciones ::= instrucciones instruccion
+                | instruccion
+                ;
+
+instruccion ::= declaracion_robot
+              | accion_robot
+              | error PUNTO_COMA  /* Manejo de errores de sintaxis */
+              ;
+
+declaracion_robot ::= ROBOT IDENTIFICADOR:id
+                     {:
+                         // Añadir robot a la tabla de símbolos
+                         parser.TablaSimbolo.addSymbol(id, "ROBOT");
+                     :}
+                     ;
+
+accion_robot ::= IDENTIFICADOR:id PUNTO llamada_metodo
+               | IDENTIFICADOR:id PUNTO asignacion_parametro
+               | IDENTIFICADOR:id PUNTO bloque_repeticion
+               ;
+
+asignacion_parametro ::= BASE IGUAL NUMERO:val
+                       | CUERPO IGUAL NUMERO:val
+                       | GARRA IGUAL NUMERO:val
+                       | VELOCIDAD IGUAL NUMERO:val
+                       ;
+
+llamada_metodo ::= BASE PARENTESIS_A NUMERO:val PARENTESIS_C
+                 | CUERPO PARENTESIS_A NUMERO:val PARENTESIS_C
+                 | GARRA PARENTESIS_A NUMERO:val PARENTESIS_C
+                 | VELOCIDAD PARENTESIS_A NUMERO:val PARENTESIS_C
+                 | ABRIR_GARRA PARENTESIS_A PARENTESIS_C
+                 | CERRAR_GARRA PARENTESIS_A PARENTESIS_C
+                 | INICIAR
+                 | DETENER
+                 ;
+
+bloque_repeticion ::= REPETIR PARENTESIS_A NUMERO:num PARENTESIS_C LLAVE_A instrucciones_repeticion LLAVE_C
+                    ;
+
+instrucciones_repeticion ::= instrucciones
+                           | /* vacío */
+                           ;
