@@ -10,114 +10,115 @@ public class TablaSimbolo {
     /**
      * Clase interna para almacenar información de un símbolo
      */
-    public class SymbolInfo {
-        private String name; // Nombre del símbolo
-        private String type; // Tipo del símbolo (ROBOT, METHOD, etc.)
-        private Object value; // Valor del símbolo (si aplica)
-        private int numParams; // Número de parámetros (para métodos)
-        private int minValue; // Valor mínimo permitido
-        private int maxValue; // Valor máximo permitido
-        private int line; // Línea donde se definió
-        private int column; // Columna donde se definió
+    public class SimboloInfo {
+        private String nombre; // Nombre del símbolo
+        private String tipo; // Tipo del símbolo (ROBOT, METHOD, etc.)
+        private Object valor; // Valor del símbolo (si aplica)
+        private int numParametros; // Número de parámetros (para métodos)
+        private int minValor; // Valor mínimo permitido
+        private int maxValor; // Valor máximo permitido
+        private int linea; // Línea donde se definió
+        private int columna; // Columna donde se definió
 
-        public SymbolInfo(String name, String type) {
-            this.name = name;
-            this.type = type;
-            this.value = null;
-            this.numParams = 0;
-            this.minValue = 0;
-            this.maxValue = 0;
-            this.line = 0;
-            this.column = 0;
+        public SimboloInfo(String nombre, String tipo) {
+            this.nombre = nombre;
+            this.tipo = tipo;
+            this.valor = null;
+            this.numParametros = 0;
+            this.minValor = 0;
+            this.maxValor = 0;
+            this.linea = 0;
+            this.columna = 0;
         }
 
-        public SymbolInfo(String name, String type, Object value, int numParams, int minValue, int maxValue) {
-            this.name = name;
-            this.type = type;
-            this.value = value;
-            this.numParams = numParams;
-            this.minValue = minValue;
-            this.maxValue = maxValue;
-            this.line = 0;
-            this.column = 0;
+        public SimboloInfo(String nombre, String tipo, Object valor, int numParametros, int minValor, int maxValor) {
+            this.nombre = nombre;
+            this.tipo = tipo;
+            this.valor = valor;
+            this.numParametros = numParametros;
+            this.minValor = minValor;
+            this.maxValor = maxValor;
+            this.linea = 0;
+            this.columna = 0;
         }
 
-        public SymbolInfo(String name, String type, Object value, int numParams, int minValue, int maxValue, int line,
-                int column) {
-            this.name = name;
-            this.type = type;
-            this.value = value;
-            this.numParams = numParams;
-            this.minValue = minValue;
-            this.maxValue = maxValue;
-            this.line = line;
-            this.column = column;
+        public SimboloInfo(String nombre, String tipo, Object valor, int numParametros, int minValor, int maxValor,
+                int linea,
+                int columna) {
+            this.nombre = nombre;
+            this.tipo = tipo;
+            this.valor = valor;
+            this.numParametros = numParametros;
+            this.minValor = minValor;
+            this.maxValor = maxValor;
+            this.linea = linea;
+            this.columna = columna;
         }
 
         // Getters
-        public String getName() {
-            return name;
+        public String getNombre() {
+            return nombre;
         }
 
-        public String getType() {
-            return type;
+        public String getTipo() {
+            return tipo;
         }
 
-        public Object getValue() {
-            return value;
+        public Object getValor() {
+            return valor;
         }
 
-        public int getNumParams() {
-            return numParams;
+        public int getNumParametros() {
+            return numParametros;
         }
 
-        public int getMinValue() {
-            return minValue;
+        public int getMinValor() {
+            return minValor;
         }
 
-        public int getMaxValue() {
-            return maxValue;
+        public int getMaxValor() {
+            return maxValor;
         }
 
-        public int getLine() {
-            return line;
+        public int getLinea() {
+            return linea;
         }
 
-        public int getColumn() {
-            return column;
+        public int getColumna() {
+            return columna;
         }
 
         // Setters
-        public void setValue(Object value) {
-            this.value = value;
+        public void setValor(Object value) {
+            this.valor = value;
         }
 
-        public void setLine(int line) {
-            this.line = line;
+        public void setLinea(int line) {
+            this.linea = line;
         }
 
-        public void setColumn(int column) {
-            this.column = column;
+        public void setColumna(int column) {
+            this.columna = column;
         }
 
         @Override
         public String toString() {
-            return "SymbolInfo[name=" + name + ", type=" + type + ", value=" + value +
-                    ", params=" + numParams + ", range=[" + minValue + ".." + maxValue + "], " +
-                    "pos=(" + line + "," + column + ")]";
+            return "SymbolInfo[name=" + nombre + ", type=" + tipo + ", value=" + valor +
+                    ", params=" + numParametros + ", range=[" + minValor + ".." + maxValor + "], " +
+                    "pos=(" + linea + "," + columna + ")]";
         }
     }
 
     // Estructura de datos para almacenar los símbolos
-    private HashMap<String, SymbolInfo> symbols;
-    private HashMap<String, SymbolInfo> methods;
+    private HashMap<String, SimboloInfo> simbolos;
+    private HashMap<String, SimboloInfo> metodos;
 
     /**
      * Constructor de la tabla de símbolos
      */
     public TablaSimbolo() {
-        symbols = new HashMap<>();
-        methods = new HashMap<>();
+        simbolos = new HashMap<>();
+        metodos = new HashMap<>();
 
         // Añadir métodos predefinidos con sus rangos
         addMethod("base", 1, 0, 360);
@@ -134,13 +135,13 @@ public class TablaSimbolo {
     /**
      * Añade un símbolo a la tabla
      * 
-     * @param name Nombre del símbolo
-     * @param type Tipo del símbolo
+     * @param nombre Nombre del símbolo
+     * @param tipo   Tipo del símbolo
      * @return true si se añadió correctamente, false si ya existía
      */
-    public boolean addSymbol(String name, String type) {
-        if (!symbols.containsKey(name)) {
-            symbols.put(name, new SymbolInfo(name, type));
+    public boolean addSimbolo(String nombre, String tipo) {
+        if (!simbolos.containsKey(nombre)) {
+            simbolos.put(nombre, new SimboloInfo(nombre, tipo));
             return true;
         }
         return false;
@@ -149,18 +150,18 @@ public class TablaSimbolo {
     /**
      * Añade un símbolo a la tabla con información de posición
      * 
-     * @param name   Nombre del símbolo
-     * @param type   Tipo del símbolo
-     * @param line   Línea donde se definió
-     * @param column Columna donde se definió
+     * @param nombre  Nombre del símbolo
+     * @param tipo    Tipo del símbolo
+     * @param linea   Línea donde se definió
+     * @param columna Columna donde se definió
      * @return true si se añadió correctamente, false si ya existía
      */
-    public boolean addSymbol(String name, String type, int line, int column) {
-        if (!symbols.containsKey(name)) {
-            SymbolInfo info = new SymbolInfo(name, type);
-            info.setLine(line);
-            info.setColumn(column);
-            symbols.put(name, info);
+    public boolean addSimbolo(String nombre, String tipo, int linea, int columna) {
+        if (!simbolos.containsKey(nombre)) {
+            SimboloInfo info = new SimboloInfo(nombre, tipo);
+            info.setLinea(linea);
+            info.setColumna(columna);
+            simbolos.put(nombre, info);
             return true;
         }
         return false;
@@ -169,43 +170,43 @@ public class TablaSimbolo {
     /**
      * Añade un método a la tabla con sus rangos de valores
      * 
-     * @param name      Nombre del método
-     * @param numParams Número de parámetros
-     * @param minValue  Valor mínimo permitido
-     * @param maxValue  Valor máximo permitido
+     * @param nombre        Nombre del método
+     * @param numParametros Número de parámetros
+     * @param minValor      Valor mínimo permitido
+     * @param maxValor      Valor máximo permitido
      */
-    private void addMethod(String name, int numParams, int minValue, int maxValue) {
-        methods.put(name, new SymbolInfo(name, "METHOD", null, numParams, minValue, maxValue));
+    private void addMethod(String nombre, int numParametros, int minValor, int maxValor) {
+        metodos.put(nombre, new SimboloInfo(nombre, "METHOD", null, numParametros, minValor, maxValor));
     }
 
     /**
      * Verifica si existe un símbolo en la tabla
      * 
-     * @param name Nombre del símbolo
+     * @param nombre Nombre del símbolo
      * @return true si existe, false si no
      */
-    public boolean symbolExists(String name) {
-        return symbols.containsKey(name);
+    public boolean simboloExiste(String nombre) {
+        return simbolos.containsKey(nombre);
     }
 
     /**
      * Obtiene la información de un símbolo
      * 
-     * @param name Nombre del símbolo
+     * @param nombre Nombre del símbolo
      * @return Información del símbolo o null si no existe
      */
-    public SymbolInfo getSymbolInfo(String name) {
-        return symbols.get(name);
+    public SimboloInfo getSimboloInfo(String nombre) {
+        return simbolos.get(nombre);
     }
 
     /**
      * Obtiene la información de un método
      * 
-     * @param name Nombre del método
+     * @param nombre Nombre del método
      * @return Información del método o null si no existe
      */
-    public SymbolInfo getMethodInfo(String name) {
-        return methods.get(name);
+    public SimboloInfo getMetodoInfo(String nombre) {
+        return metodos.get(nombre);
     }
 
     /**
@@ -213,9 +214,9 @@ public class TablaSimbolo {
      * 
      * @return Lista con todos los símbolos
      */
-    public ArrayList<SymbolInfo> getAllSymbols() {
-        ArrayList<SymbolInfo> result = new ArrayList<>(symbols.values());
-        return result;
+    public ArrayList<SimboloInfo> getSimbolos() {
+        ArrayList<SimboloInfo> resultado = new ArrayList<>(simbolos.values());
+        return resultado;
     }
 
     /**
@@ -223,9 +224,9 @@ public class TablaSimbolo {
      * 
      * @return Lista con todos los métodos
      */
-    public ArrayList<SymbolInfo> getAllMethods() {
-        ArrayList<SymbolInfo> result = new ArrayList<>(methods.values());
-        return result;
+    public ArrayList<SimboloInfo> getMetodos() {
+        ArrayList<SimboloInfo> resultado = new ArrayList<>(metodos.values());
+        return resultado;
     }
 
     /**
@@ -234,40 +235,40 @@ public class TablaSimbolo {
      * @return Lista de errores encontrados
      */
     public ArrayList<String> findDuplicateRobots() {
-        ArrayList<String> errors = new ArrayList<>();
-        HashMap<String, SymbolInfo> robotsFound = new HashMap<>();
+        ArrayList<String> errores = new ArrayList<>();
+        HashMap<String, SimboloInfo> robotsEncontrados = new HashMap<>();
 
-        for (SymbolInfo symbol : symbols.values()) {
-            if (symbol.getType().equals("ROBOT")) {
-                if (robotsFound.containsKey(symbol.getName())) {
-                    SymbolInfo first = robotsFound.get(symbol.getName());
-                    errors.add("Error semántico en línea " + symbol.getLine() + ", columna " + symbol.getColumn() +
-                            ": Robot '" + symbol.getName() + "' ya declarado previamente en línea " +
-                            first.getLine() + ", columna " + first.getColumn());
+        for (SimboloInfo simbolo : simbolos.values()) {
+            if (simbolo.getTipo().equals("ROBOT")) {
+                if (robotsEncontrados.containsKey(simbolo.getNombre())) {
+                    SimboloInfo first = robotsEncontrados.get(simbolo.getNombre());
+                    errores.add("Error semántico en línea " + simbolo.getLinea() + ", columna " + simbolo.getColumna() +
+                            ": Robot '" + simbolo.getNombre() + "' ya declarado previamente en línea " +
+                            first.getLinea() + ", columna " + first.getColumna());
                 } else {
-                    robotsFound.put(symbol.getName(), symbol);
+                    robotsEncontrados.put(simbolo.getNombre(), simbolo);
                 }
             }
         }
 
-        return errors;
+        return errores;
     }
 
     /**
      * Imprime el contenido de la tabla de símbolos
      */
-    public void printSymbolTable() {
+    public void imprimirTablaSimbolo() {
         System.out.println("===== TABLA DE SÍMBOLOS =====");
         System.out.println("--- Robots ---");
-        for (SymbolInfo symbol : symbols.values()) {
-            if (symbol.getType().equals("ROBOT")) {
-                System.out.println(symbol);
+        for (SimboloInfo simbolo : simbolos.values()) {
+            if (simbolo.getTipo().equals("ROBOT")) {
+                System.out.println(simbolo);
             }
         }
 
         System.out.println("--- Métodos predefinidos ---");
-        for (SymbolInfo method : methods.values()) {
-            System.out.println(method);
+        for (SimboloInfo metodo : metodos.values()) {
+            System.out.println(metodo);
         }
         System.out.println("============================");
     }

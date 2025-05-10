@@ -7,590 +7,661 @@ import java_cup.runtime.*;
 import java.util.ArrayList;
 import java_cup.runtime.XMLElement;
 
-/** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
-  */
-@SuppressWarnings({"rawtypes"})
+/**
+ * CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
+ */
+@SuppressWarnings({ "rawtypes" })
 public class parser extends java_cup.runtime.lr_parser {
 
- public final Class getSymbolContainer() {
+  public final Class getSymbolContainer() {
     return sym.class;
-}
+  }
 
   /** Default constructor. */
   @Deprecated
-  public parser() {super();}
+  public parser() {
+    super();
+  }
 
   /** Constructor which sets the default scanner. */
   @Deprecated
-  public parser(java_cup.runtime.Scanner s) {super(s);}
+  public parser(java_cup.runtime.Scanner s) {
+    super(s);
+  }
 
   /** Constructor which sets the default scanner. */
-  public parser(java_cup.runtime.Scanner s, java_cup.runtime.SymbolFactory sf) {super(s,sf);}
+  public parser(java_cup.runtime.Scanner s, java_cup.runtime.SymbolFactory sf) {
+    super(s, sf);
+  }
 
   /** Production table. */
-  protected static final short _production_table[][] = 
-    unpackFromStrings(new String[] {
-    "\000\032\000\002\002\004\000\002\002\003\000\002\003" +
-    "\004\000\002\003\003\000\002\004\003\000\002\004\003" +
-    "\000\002\004\003\000\002\005\004\000\002\006\005\000" +
-    "\002\006\005\000\002\006\005\000\002\007\005\000\002" +
-    "\007\005\000\002\007\005\000\002\007\005\000\002\010" +
-    "\006\000\002\010\006\000\002\010\006\000\002\010\006" +
-    "\000\002\010\005\000\002\010\005\000\002\010\003\000" +
-    "\002\010\003\000\002\011\011\000\002\012\003\000\002" +
-    "\012\002" });
+  protected static final short _production_table[][] = unpackFromStrings(new String[] {
+      "\000\032\000\002\002\004\000\002\002\003\000\002\003" +
+          "\004\000\002\003\003\000\002\004\003\000\002\004\003" +
+          "\000\002\004\003\000\002\005\004\000\002\006\005\000" +
+          "\002\006\005\000\002\006\005\000\002\007\005\000\002" +
+          "\007\005\000\002\007\005\000\002\007\005\000\002\010" +
+          "\006\000\002\010\006\000\002\010\006\000\002\010\006" +
+          "\000\002\010\005\000\002\010\005\000\002\010\003\000" +
+          "\002\010\003\000\002\011\011\000\002\012\003\000\002" +
+          "\012\002" });
 
   /** Access to production table. */
-  public short[][] production_table() {return _production_table;}
+  public short[][] production_table() {
+    return _production_table;
+  }
 
   /** Parse-action table. */
-  protected static final short[][] _action_table = 
-    unpackFromStrings(new String[] {
-    "\000\070\000\010\003\006\004\012\026\007\001\002\000" +
-    "\012\002\000\003\006\004\012\026\007\001\002\000\004" +
-    "\002\072\001\002\000\014\002\ufffb\003\ufffb\004\ufffb\023" +
-    "\ufffb\026\ufffb\001\002\000\004\016\015\001\002\000\014" +
-    "\002\ufffd\003\ufffd\004\ufffd\023\ufffd\026\ufffd\001\002\000" +
-    "\014\002\ufffe\003\ufffe\004\ufffe\023\ufffe\026\ufffe\001\002" +
-    "\000\004\026\014\001\002\000\014\002\ufffc\003\ufffc\004" +
-    "\ufffc\023\ufffc\026\ufffc\001\002\000\014\002\ufffa\003\ufffa" +
-    "\004\ufffa\023\ufffa\026\ufffa\001\002\000\024\005\023\006" +
-    "\020\007\016\010\024\011\022\012\026\013\021\014\025" +
-    "\015\027\001\002\000\006\017\065\020\066\001\002\000" +
-    "\014\002\ufff9\003\ufff9\004\ufff9\023\ufff9\026\ufff9\001\002" +
-    "\000\014\002\uffeb\003\uffeb\004\uffeb\023\uffeb\026\uffeb\001" +
-    "\002\000\004\020\063\001\002\000\006\017\056\020\057" +
-    "\001\002\000\014\002\uffec\003\uffec\004\uffec\023\uffec\026" +
-    "\uffec\001\002\000\006\017\051\020\052\001\002\000\004" +
-    "\020\047\001\002\000\006\017\042\020\043\001\002\000" +
-    "\004\020\032\001\002\000\014\002\ufff7\003\ufff7\004\ufff7" +
-    "\023\ufff7\026\ufff7\001\002\000\014\002\ufff8\003\ufff8\004" +
-    "\ufff8\023\ufff8\026\ufff8\001\002\000\004\027\033\001\002" +
-    "\000\004\021\034\001\002\000\004\022\035\001\002\000" +
-    "\012\003\006\004\012\023\uffe8\026\007\001\002\000\012" +
-    "\003\006\004\012\023\uffe9\026\007\001\002\000\004\023" +
-    "\040\001\002\000\014\002\uffea\003\uffea\004\uffea\023\uffea" +
-    "\026\uffea\001\002\000\014\002\uffff\003\uffff\004\uffff\023" +
-    "\uffff\026\uffff\001\002\000\004\027\046\001\002\000\004" +
-    "\027\044\001\002\000\004\021\045\001\002\000\014\002" +
-    "\uffef\003\uffef\004\uffef\023\uffef\026\uffef\001\002\000\014" +
-    "\002\ufff3\003\ufff3\004\ufff3\023\ufff3\026\ufff3\001\002\000" +
-    "\004\021\050\001\002\000\014\002\uffed\003\uffed\004\uffed" +
-    "\023\uffed\026\uffed\001\002\000\004\027\055\001\002\000" +
-    "\004\027\053\001\002\000\004\021\054\001\002\000\014" +
-    "\002\ufff1\003\ufff1\004\ufff1\023\ufff1\026\ufff1\001\002\000" +
-    "\014\002\ufff5\003\ufff5\004\ufff5\023\ufff5\026\ufff5\001\002" +
-    "\000\004\027\062\001\002\000\004\027\060\001\002\000" +
-    "\004\021\061\001\002\000\014\002\ufff0\003\ufff0\004\ufff0" +
-    "\023\ufff0\026\ufff0\001\002\000\014\002\ufff4\003\ufff4\004" +
-    "\ufff4\023\ufff4\026\ufff4\001\002\000\004\021\064\001\002" +
-    "\000\014\002\uffee\003\uffee\004\uffee\023\uffee\026\uffee\001" +
-    "\002\000\004\027\071\001\002\000\004\027\067\001\002" +
-    "\000\004\021\070\001\002\000\014\002\ufff2\003\ufff2\004" +
-    "\ufff2\023\ufff2\026\ufff2\001\002\000\014\002\ufff6\003\ufff6" +
-    "\004\ufff6\023\ufff6\026\ufff6\001\002\000\004\002\001\001" +
-    "\002" });
+  protected static final short[][] _action_table = unpackFromStrings(new String[] {
+      "\000\070\000\010\003\006\004\012\026\007\001\002\000" +
+          "\012\002\000\003\006\004\012\026\007\001\002\000\004" +
+          "\002\072\001\002\000\014\002\ufffb\003\ufffb\004\ufffb\023" +
+          "\ufffb\026\ufffb\001\002\000\004\016\015\001\002\000\014" +
+          "\002\ufffd\003\ufffd\004\ufffd\023\ufffd\026\ufffd\001\002\000" +
+          "\014\002\ufffe\003\ufffe\004\ufffe\023\ufffe\026\ufffe\001\002" +
+          "\000\004\026\014\001\002\000\014\002\ufffc\003\ufffc\004" +
+          "\ufffc\023\ufffc\026\ufffc\001\002\000\014\002\ufffa\003\ufffa" +
+          "\004\ufffa\023\ufffa\026\ufffa\001\002\000\024\005\023\006" +
+          "\020\007\016\010\024\011\022\012\026\013\021\014\025" +
+          "\015\027\001\002\000\006\017\065\020\066\001\002\000" +
+          "\014\002\ufff9\003\ufff9\004\ufff9\023\ufff9\026\ufff9\001\002" +
+          "\000\014\002\uffeb\003\uffeb\004\uffeb\023\uffeb\026\uffeb\001" +
+          "\002\000\004\020\063\001\002\000\006\017\056\020\057" +
+          "\001\002\000\014\002\uffec\003\uffec\004\uffec\023\uffec\026" +
+          "\uffec\001\002\000\006\017\051\020\052\001\002\000\004" +
+          "\020\047\001\002\000\006\017\042\020\043\001\002\000" +
+          "\004\020\032\001\002\000\014\002\ufff7\003\ufff7\004\ufff7" +
+          "\023\ufff7\026\ufff7\001\002\000\014\002\ufff8\003\ufff8\004" +
+          "\ufff8\023\ufff8\026\ufff8\001\002\000\004\027\033\001\002" +
+          "\000\004\021\034\001\002\000\004\022\035\001\002\000" +
+          "\012\003\006\004\012\023\uffe8\026\007\001\002\000\012" +
+          "\003\006\004\012\023\uffe9\026\007\001\002\000\004\023" +
+          "\040\001\002\000\014\002\uffea\003\uffea\004\uffea\023\uffea" +
+          "\026\uffea\001\002\000\014\002\uffff\003\uffff\004\uffff\023" +
+          "\uffff\026\uffff\001\002\000\004\027\046\001\002\000\004" +
+          "\027\044\001\002\000\004\021\045\001\002\000\014\002" +
+          "\uffef\003\uffef\004\uffef\023\uffef\026\uffef\001\002\000\014" +
+          "\002\ufff3\003\ufff3\004\ufff3\023\ufff3\026\ufff3\001\002\000" +
+          "\004\021\050\001\002\000\014\002\uffed\003\uffed\004\uffed" +
+          "\023\uffed\026\uffed\001\002\000\004\027\055\001\002\000" +
+          "\004\027\053\001\002\000\004\021\054\001\002\000\014" +
+          "\002\ufff1\003\ufff1\004\ufff1\023\ufff1\026\ufff1\001\002\000" +
+          "\014\002\ufff5\003\ufff5\004\ufff5\023\ufff5\026\ufff5\001\002" +
+          "\000\004\027\062\001\002\000\004\027\060\001\002\000" +
+          "\004\021\061\001\002\000\014\002\ufff0\003\ufff0\004\ufff0" +
+          "\023\ufff0\026\ufff0\001\002\000\014\002\ufff4\003\ufff4\004" +
+          "\ufff4\023\ufff4\026\ufff4\001\002\000\004\021\064\001\002" +
+          "\000\014\002\uffee\003\uffee\004\uffee\023\uffee\026\uffee\001" +
+          "\002\000\004\027\071\001\002\000\004\027\067\001\002" +
+          "\000\004\021\070\001\002\000\014\002\ufff2\003\ufff2\004" +
+          "\ufff2\023\ufff2\026\ufff2\001\002\000\014\002\ufff6\003\ufff6" +
+          "\004\ufff6\023\ufff6\026\ufff6\001\002\000\004\002\001\001" +
+          "\002" });
 
   /** Access to parse-action table. */
-  public short[][] action_table() {return _action_table;}
+  public short[][] action_table() {
+    return _action_table;
+  }
 
   /** <code>reduce_goto</code> table. */
-  protected static final short[][] _reduce_table = 
-    unpackFromStrings(new String[] {
-    "\000\070\000\014\002\004\003\003\004\010\005\007\006" +
-    "\012\001\001\000\010\004\040\005\007\006\012\001\001" +
-    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\010\007\030\010\016\011" +
-    "\027\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\002\001\001\000\014" +
-    "\003\035\004\010\005\007\006\012\012\036\001\001\000" +
-    "\010\004\040\005\007\006\012\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001" });
+  protected static final short[][] _reduce_table = unpackFromStrings(new String[] {
+      "\000\070\000\014\002\004\003\003\004\010\005\007\006" +
+          "\012\001\001\000\010\004\040\005\007\006\012\001\001" +
+          "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+          "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+          "\001\001\000\002\001\001\000\010\007\030\010\016\011" +
+          "\027\001\001\000\002\001\001\000\002\001\001\000\002" +
+          "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+          "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+          "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+          "\002\001\001\000\002\001\001\000\002\001\001\000\014" +
+          "\003\035\004\010\005\007\006\012\012\036\001\001\000" +
+          "\010\004\040\005\007\006\012\001\001\000\002\001\001" +
+          "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+          "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+          "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+          "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+          "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+          "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+          "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+          "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+          "\000\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
-  public short[][] reduce_table() {return _reduce_table;}
+  public short[][] reduce_table() {
+    return _reduce_table;
+  }
 
   /** Instance of action encapsulation class. */
   protected CUP$parser$actions action_obj;
 
   /** Action encapsulation object initializer. */
-  protected void init_actions()
-    {
-      action_obj = new CUP$parser$actions(this);
-    }
+  protected void init_actions() {
+    action_obj = new CUP$parser$actions(this);
+  }
 
   /** Invoke a user supplied parse action. */
   public java_cup.runtime.Symbol do_action(
-    int                        act_num,
-    java_cup.runtime.lr_parser parser,
-    java.util.Stack            stack,
-    int                        top)
-    throws java.lang.Exception
-  {
+      int act_num,
+      java_cup.runtime.lr_parser parser,
+      java.util.Stack stack,
+      int top)
+      throws java.lang.Exception {
     /* call code in generated class */
     return action_obj.CUP$parser$do_action(act_num, parser, stack, top);
   }
 
   /** Indicates start state. */
-  public int start_state() {return 0;}
-  /** Indicates start production. */
-  public int start_production() {return 0;}
-
-  /** <code>EOF</code> Symbol index. */
-  public int EOF_sym() {return 0;}
-
-  /** <code>error</code> Symbol index. */
-  public int error_sym() {return 1;}
-
-
-
-    // Tabla de símbolos para seguimiento de variables y métodos
-    private TablaSimbolo tablaSimbolo = new TablaSimbolo();
-    
-    // Lista para errores
-    private ArrayList<String> errores = new ArrayList<>();
-    
-    // Método para manejar errores sintácticos
-    public void syntax_error(Symbol s) {
-        String error = "Error sintáctico en línea " + (s.left+1) + ", columna " + (s.right+1) + 
-                       ": Símbolo inesperado \"" + s.value + "\"";
-        System.out.println(error);
-        errores.add(error);
-    }
-
-    // Método para manejar errores sintácticos fatales
-    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception {
-        String error = "Error sintáctico fatal en línea " + (s.left+1) + ", columna " + (s.right+1) + 
-                       ": Símbolo inesperado \"" + s.value + "\"";
-        System.out.println(error);
-        errores.add(error);
-    }
-    
-    // Método para obtener la tabla de símbolos
-    public TablaSimbolo getTablaSimbolo() {
-        return tablaSimbolo;
-    }
-    
-    // Método para obtener la lista de errores
-    public ArrayList<String> getErrores() {
-        return errores;
-    }
-    
-    // Método para añadir un error
-    public void addError(String error) {
-        errores.add(error);
-        System.out.println(error);
-    }
-
-
-/** Cup generated class to encapsulate user supplied action code.*/
-@SuppressWarnings({"rawtypes", "unchecked", "unused"})
-class CUP$parser$actions {
-  private final parser parser;
-
-  /** Constructor */
-  CUP$parser$actions(parser parser) {
-    this.parser = parser;
+  public int start_state() {
+    return 0;
   }
 
-  /** Method 0 with the actual generated action code for actions 0 to 300. */
-  public final java_cup.runtime.Symbol CUP$parser$do_action_part00000000(
-    int                        CUP$parser$act_num,
-    java_cup.runtime.lr_parser CUP$parser$parser,
-    java.util.Stack            CUP$parser$stack,
-    int                        CUP$parser$top)
-    throws java.lang.Exception
-    {
+  /** Indicates start production. */
+  public int start_production() {
+    return 0;
+  }
+
+  /** <code>EOF</code> Symbol index. */
+  public int EOF_sym() {
+    return 0;
+  }
+
+  /** <code>error</code> Symbol index. */
+  public int error_sym() {
+    return 1;
+  }
+
+  // Tabla de símbolos para seguimiento de variables y métodos
+  private TablaSimbolo tablaSimbolo = new TablaSimbolo();
+
+  // Lista para errores
+  private ArrayList<String> errores = new ArrayList<>();
+
+  // Método para manejar errores sintácticos
+  public void syntax_error(Symbol s) {
+    String error = "Error sintáctico en línea " + (s.left + 1) + ", columna " + (s.right + 1) +
+        ": Símbolo inesperado \"" + s.value + "\"";
+    System.out.println(error);
+    errores.add(error);
+  }
+
+  // Método para manejar errores sintácticos fatales
+  public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception {
+    String error = "Error sintáctico fatal en línea " + (s.left + 1) + ", columna " + (s.right + 1) +
+        ": Símbolo inesperado \"" + s.value + "\"";
+    System.out.println(error);
+    errores.add(error);
+  }
+
+  // Método para obtener la tabla de símbolos
+  public TablaSimbolo getTablaSimbolo() {
+    return tablaSimbolo;
+  }
+
+  // Método para obtener la lista de errores
+  public ArrayList<String> getErrores() {
+    return errores;
+  }
+
+  // Método para añadir un error
+  public void addError(String error) {
+    errores.add(error);
+    System.out.println(error);
+  }
+
+  /** Cup generated class to encapsulate user supplied action code. */
+  @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+  class CUP$parser$actions {
+    private final parser parser;
+
+    /** Constructor */
+    CUP$parser$actions(parser parser) {
+      this.parser = parser;
+    }
+
+    /** Method 0 with the actual generated action code for actions 0 to 300. */
+    public final java_cup.runtime.Symbol CUP$parser$do_action_part00000000(
+        int CUP$parser$act_num,
+        java_cup.runtime.lr_parser CUP$parser$parser,
+        java.util.Stack CUP$parser$stack,
+        int CUP$parser$top)
+        throws java.lang.Exception {
       /* Symbol object for return from actions */
       java_cup.runtime.Symbol CUP$parser$result;
 
       /* select the action based on the action number */
-      switch (CUP$parser$act_num)
+      switch (CUP$parser$act_num) {
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 0: // $START ::= programa EOF
         {
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 0: // $START ::= programa EOF 
-            {
-              Object RESULT =null;
-		int start_valleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
-		int start_valright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
-		Object start_val = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		RESULT = start_val;
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("$START",0, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
+          Object RESULT = null;
+          int start_valleft = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 1)).left;
+          int start_valright = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 1)).right;
+          Object start_val = (Object) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 1)).value;
+          RESULT = start_val;
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("$START", 0,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 1)),
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), RESULT);
+        }
           /* ACCEPT */
           CUP$parser$parser.done_parsing();
           return CUP$parser$result;
 
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 1: // programa ::= instrucciones 
-            {
-              Object RESULT =null;
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 1: // programa ::= instrucciones
+        {
+          Object RESULT = null;
 
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("programa",0, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
-          return CUP$parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 2: // instrucciones ::= instrucciones instruccion 
-            {
-              Object RESULT =null;
-
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("instrucciones",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
-          return CUP$parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 3: // instrucciones ::= instruccion 
-            {
-              Object RESULT =null;
-
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("instrucciones",1, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
-          return CUP$parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 4: // instruccion ::= declaracion_robot 
-            {
-              Object RESULT =null;
-
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("instruccion",2, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
-          return CUP$parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 5: // instruccion ::= accion_robot 
-            {
-              Object RESULT =null;
-
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("instruccion",2, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
-          return CUP$parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 6: // instruccion ::= error 
-            {
-              Object RESULT =null;
-		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		Object e = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		
-                    parser.addError("Error de sintaxis en la instrucción, intentando recuperarse...");
-                
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("instruccion",2, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
-          return CUP$parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 7: // declaracion_robot ::= ROBOT IDENTIFICADOR 
-            {
-              Object RESULT =null;
-		int idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		
-                         // Añadir robot a la tabla de símbolos
-                         if (parser.tablaSimbolo.symbolExists(id)) {
-                             parser.addError("Error semántico: Robot '" + id + "' ya declarado anteriormente");
-                         } else {
-                             parser.tablaSimbolo.addSymbol(id, "ROBOT", idleft, idright);
-                         }
-                     
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("declaracion_robot",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
-          return CUP$parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 8: // accion_robot ::= IDENTIFICADOR PUNTO llamada_metodo 
-            {
-              Object RESULT =null;
-		int idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
-		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
-		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-		
-                   // Verificar si el robot existe
-                   if (!parser.tablaSimbolo.symbolExists(id)) {
-                       parser.addError("Error semántico: Robot '" + id + "' no declarado");
-                   }
-               
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("accion_robot",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
-          return CUP$parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 9: // accion_robot ::= IDENTIFICADOR PUNTO asignacion_parametro 
-            {
-              Object RESULT =null;
-		int idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
-		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
-		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-		
-                   // Verificar si el robot existe
-                   if (!parser.tablaSimbolo.symbolExists(id)) {
-                       parser.addError("Error semántico: Robot '" + id + "' no declarado");
-                   }
-               
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("accion_robot",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
-          return CUP$parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 10: // accion_robot ::= IDENTIFICADOR PUNTO bloque_repeticion 
-            {
-              Object RESULT =null;
-		int idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
-		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
-		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-		
-                   // Verificar si el robot existe
-                   if (!parser.tablaSimbolo.symbolExists(id)) {
-                       parser.addError("Error semántico: Robot '" + id + "' no declarado");
-                   }
-               
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("accion_robot",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
-          return CUP$parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 11: // asignacion_parametro ::= BASE IGUAL NUMERO 
-            {
-              Object RESULT =null;
-		int valleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int valright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		Integer val = (Integer)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		
-                           // Validar rango para base (0-360)
-                           if (val < 0 || val > 360) {
-                               parser.addError("Error semántico: Valor fuera de rango para 'base': " + val + " (rango permitido: [0..360])");
-                           }
-                       
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("asignacion_parametro",5, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
-          return CUP$parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 12: // asignacion_parametro ::= CUERPO IGUAL NUMERO 
-            {
-              Object RESULT =null;
-		int valleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int valright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		Integer val = (Integer)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		
-                           // Validar rango para cuerpo (0-180)
-                           if (val < 0 || val > 180) {
-                               parser.addError("Error semántico: Valor fuera de rango para 'cuerpo': " + val + " (rango permitido: [0..180])");
-                           }
-                       
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("asignacion_parametro",5, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
-          return CUP$parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 13: // asignacion_parametro ::= GARRA IGUAL NUMERO 
-            {
-              Object RESULT =null;
-		int valleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int valright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		Integer val = (Integer)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		
-                           // Validar rango para garra (0-90)
-                           if (val < 0 || val > 90) {
-                               parser.addError("Error semántico: Valor fuera de rango para 'garra': " + val + " (rango permitido: [0..90])");
-                           }
-                       
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("asignacion_parametro",5, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
-          return CUP$parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 14: // asignacion_parametro ::= VELOCIDAD IGUAL NUMERO 
-            {
-              Object RESULT =null;
-		int valleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int valright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		Integer val = (Integer)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		
-                           // Validar rango para velocidad (1-100)
-                           if (val < 1 || val > 100) {
-                               parser.addError("Error semántico: Valor fuera de rango para 'velocidad': " + val + " (rango permitido: [1..100])");
-                           }
-                       
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("asignacion_parametro",5, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
-          return CUP$parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 15: // llamada_metodo ::= BASE PARENTESIS_A NUMERO PARENTESIS_C 
-            {
-              Object RESULT =null;
-		int valleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
-		int valright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
-		Integer val = (Integer)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		
-                     // Validar rango para base (0-360)
-                     if (val < 0 || val > 360) {
-                         parser.addError("Error semántico: Valor fuera de rango para 'base': " + val + " (rango permitido: [0..360])");
-                     }
-                 
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("llamada_metodo",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
-          return CUP$parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 16: // llamada_metodo ::= CUERPO PARENTESIS_A NUMERO PARENTESIS_C 
-            {
-              Object RESULT =null;
-		int valleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
-		int valright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
-		Integer val = (Integer)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		
-                     // Validar rango para cuerpo (0-180)
-                     if (val < 0 || val > 180) {
-                         parser.addError("Error semántico: Valor fuera de rango para 'cuerpo': " + val + " (rango permitido: [0..180])");
-                     }
-                 
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("llamada_metodo",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
-          return CUP$parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 17: // llamada_metodo ::= GARRA PARENTESIS_A NUMERO PARENTESIS_C 
-            {
-              Object RESULT =null;
-		int valleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
-		int valright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
-		Integer val = (Integer)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		
-                     // Validar rango para garra (0-90)
-                     if (val < 0 || val > 90) {
-                         parser.addError("Error semántico: Valor fuera de rango para 'garra': " + val + " (rango permitido: [0..90])");
-                     }
-                 
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("llamada_metodo",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
-          return CUP$parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 18: // llamada_metodo ::= VELOCIDAD PARENTESIS_A NUMERO PARENTESIS_C 
-            {
-              Object RESULT =null;
-		int valleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
-		int valright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
-		Integer val = (Integer)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		
-                     // Validar rango para velocidad (1-100)
-                     if (val < 1 || val > 100) {
-                         parser.addError("Error semántico: Valor fuera de rango para 'velocidad': " + val + " (rango permitido: [1..100])");
-                     }
-                 
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("llamada_metodo",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
-          return CUP$parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 19: // llamada_metodo ::= ABRIR_GARRA PARENTESIS_A PARENTESIS_C 
-            {
-              Object RESULT =null;
-
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("llamada_metodo",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
-          return CUP$parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 20: // llamada_metodo ::= CERRAR_GARRA PARENTESIS_A PARENTESIS_C 
-            {
-              Object RESULT =null;
-
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("llamada_metodo",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
-          return CUP$parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 21: // llamada_metodo ::= INICIAR 
-            {
-              Object RESULT =null;
-
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("llamada_metodo",6, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
-          return CUP$parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 22: // llamada_metodo ::= DETENER 
-            {
-              Object RESULT =null;
-
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("llamada_metodo",6, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
-          return CUP$parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 23: // bloque_repeticion ::= REPETIR PARENTESIS_A NUMERO PARENTESIS_C LLAVE_A instrucciones_repeticion LLAVE_C 
-            {
-              Object RESULT =null;
-		int numleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).left;
-		int numright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).right;
-		Integer num = (Integer)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
-		
-                        // Validar que el número de repeticiones sea positivo
-                        if (num <= 0) {
-                            parser.addError("Error semántico: El número de repeticiones debe ser positivo, se encontró: " + num);
-                        }
-                    
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("bloque_repeticion",7, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
-          return CUP$parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 24: // instrucciones_repeticion ::= instrucciones 
-            {
-              Object RESULT =null;
-
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("instrucciones_repeticion",8, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
-          return CUP$parser$result;
-
-          /*. . . . . . . . . . . . . . . . . . . .*/
-          case 25: // instrucciones_repeticion ::= 
-            {
-              Object RESULT =null;
-
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("instrucciones_repeticion",8, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
-            }
-          return CUP$parser$result;
-
-          /* . . . . . .*/
-          default:
-            throw new Exception(
-               "Invalid action number "+CUP$parser$act_num+"found in internal parse table");
-
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("programa", 0,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), ((java_cup.runtime.Symbol) CUP$parser$stack.peek()),
+              RESULT);
         }
+          return CUP$parser$result;
+
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 2: // instrucciones ::= instrucciones instruccion
+        {
+          Object RESULT = null;
+
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("instrucciones", 1,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 1)),
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), RESULT);
+        }
+          return CUP$parser$result;
+
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 3: // instrucciones ::= instruccion
+        {
+          Object RESULT = null;
+
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("instrucciones", 1,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), ((java_cup.runtime.Symbol) CUP$parser$stack.peek()),
+              RESULT);
+        }
+          return CUP$parser$result;
+
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 4: // instruccion ::= declaracion_robot
+        {
+          Object RESULT = null;
+
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("instruccion", 2,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), ((java_cup.runtime.Symbol) CUP$parser$stack.peek()),
+              RESULT);
+        }
+          return CUP$parser$result;
+
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 5: // instruccion ::= accion_robot
+        {
+          Object RESULT = null;
+
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("instruccion", 2,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), ((java_cup.runtime.Symbol) CUP$parser$stack.peek()),
+              RESULT);
+        }
+          return CUP$parser$result;
+
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 6: // instruccion ::= error
+        {
+          Object RESULT = null;
+          int eleft = ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).left;
+          int eright = ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).right;
+          Object e = (Object) ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+
+          parser.addError("Error de sintaxis en la instrucción, intentando recuperarse...");
+
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("instruccion", 2,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), ((java_cup.runtime.Symbol) CUP$parser$stack.peek()),
+              RESULT);
+        }
+          return CUP$parser$result;
+
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 7: // declaracion_robot ::= ROBOT IDENTIFICADOR
+        {
+          Object RESULT = null;
+          int idleft = ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).left;
+          int idright = ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).right;
+          String id = (String) ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+
+          // Añadir robot a la tabla de símbolos
+          if (parser.tablaSimbolo.simboloExiste(id)) {
+            parser.addError("Error semántico: Robot '" + id + "' ya declarado anteriormente");
+          } else {
+            parser.tablaSimbolo.addSimbolo(id, "ROBOT", idleft, idright);
+          }
+
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("declaracion_robot", 3,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 1)),
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), RESULT);
+        }
+          return CUP$parser$result;
+
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 8: // accion_robot ::= IDENTIFICADOR PUNTO llamada_metodo
+        {
+          Object RESULT = null;
+          int idleft = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)).left;
+          int idright = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)).right;
+          String id = (String) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)).value;
+
+          // Verificar si el robot existe
+          if (!parser.tablaSimbolo.simboloExiste(id)) {
+            parser.addError("Error semántico: Robot '" + id + "' no declarado");
+          }
+
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("accion_robot", 4,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)),
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), RESULT);
+        }
+          return CUP$parser$result;
+
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 9: // accion_robot ::= IDENTIFICADOR PUNTO asignacion_parametro
+        {
+          Object RESULT = null;
+          int idleft = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)).left;
+          int idright = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)).right;
+          String id = (String) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)).value;
+
+          // Verificar si el robot existe
+          if (!parser.tablaSimbolo.simboloExiste(id)) {
+            parser.addError("Error semántico: Robot '" + id + "' no declarado");
+          }
+
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("accion_robot", 4,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)),
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), RESULT);
+        }
+          return CUP$parser$result;
+
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 10: // accion_robot ::= IDENTIFICADOR PUNTO bloque_repeticion
+        {
+          Object RESULT = null;
+          int idleft = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)).left;
+          int idright = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)).right;
+          String id = (String) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)).value;
+
+          // Verificar si el robot existe
+          if (!parser.tablaSimbolo.simboloExiste(id)) {
+            parser.addError("Error semántico: Robot '" + id + "' no declarado");
+          }
+
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("accion_robot", 4,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)),
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), RESULT);
+        }
+          return CUP$parser$result;
+
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 11: // asignacion_parametro ::= BASE IGUAL NUMERO
+        {
+          Object RESULT = null;
+          int valleft = ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).left;
+          int valright = ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).right;
+          Integer val = (Integer) ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+
+          // Validar rango para base (0-360)
+          if (val < 0 || val > 360) {
+            parser
+                .addError("Error semántico: Valor fuera de rango para 'base': " + val + " (rango permitido: [0..360])");
+          }
+
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("asignacion_parametro", 5,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)),
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), RESULT);
+        }
+          return CUP$parser$result;
+
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 12: // asignacion_parametro ::= CUERPO IGUAL NUMERO
+        {
+          Object RESULT = null;
+          int valleft = ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).left;
+          int valright = ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).right;
+          Integer val = (Integer) ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+
+          // Validar rango para cuerpo (0-180)
+          if (val < 0 || val > 180) {
+            parser.addError(
+                "Error semántico: Valor fuera de rango para 'cuerpo': " + val + " (rango permitido: [0..180])");
+          }
+
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("asignacion_parametro", 5,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)),
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), RESULT);
+        }
+          return CUP$parser$result;
+
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 13: // asignacion_parametro ::= GARRA IGUAL NUMERO
+        {
+          Object RESULT = null;
+          int valleft = ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).left;
+          int valright = ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).right;
+          Integer val = (Integer) ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+
+          // Validar rango para garra (0-90)
+          if (val < 0 || val > 90) {
+            parser
+                .addError("Error semántico: Valor fuera de rango para 'garra': " + val + " (rango permitido: [0..90])");
+          }
+
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("asignacion_parametro", 5,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)),
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), RESULT);
+        }
+          return CUP$parser$result;
+
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 14: // asignacion_parametro ::= VELOCIDAD IGUAL NUMERO
+        {
+          Object RESULT = null;
+          int valleft = ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).left;
+          int valright = ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).right;
+          Integer val = (Integer) ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+
+          // Validar rango para velocidad (1-100)
+          if (val < 1 || val > 100) {
+            parser.addError(
+                "Error semántico: Valor fuera de rango para 'velocidad': " + val + " (rango permitido: [1..100])");
+          }
+
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("asignacion_parametro", 5,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)),
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), RESULT);
+        }
+          return CUP$parser$result;
+
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 15: // llamada_metodo ::= BASE PARENTESIS_A NUMERO PARENTESIS_C
+        {
+          Object RESULT = null;
+          int valleft = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 1)).left;
+          int valright = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 1)).right;
+          Integer val = (Integer) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 1)).value;
+
+          // Validar rango para base (0-360)
+          if (val < 0 || val > 360) {
+            parser
+                .addError("Error semántico: Valor fuera de rango para 'base': " + val + " (rango permitido: [0..360])");
+          }
+
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("llamada_metodo", 6,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 3)),
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), RESULT);
+        }
+          return CUP$parser$result;
+
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 16: // llamada_metodo ::= CUERPO PARENTESIS_A NUMERO PARENTESIS_C
+        {
+          Object RESULT = null;
+          int valleft = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 1)).left;
+          int valright = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 1)).right;
+          Integer val = (Integer) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 1)).value;
+
+          // Validar rango para cuerpo (0-180)
+          if (val < 0 || val > 180) {
+            parser.addError(
+                "Error semántico: Valor fuera de rango para 'cuerpo': " + val + " (rango permitido: [0..180])");
+          }
+
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("llamada_metodo", 6,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 3)),
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), RESULT);
+        }
+          return CUP$parser$result;
+
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 17: // llamada_metodo ::= GARRA PARENTESIS_A NUMERO PARENTESIS_C
+        {
+          Object RESULT = null;
+          int valleft = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 1)).left;
+          int valright = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 1)).right;
+          Integer val = (Integer) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 1)).value;
+
+          // Validar rango para garra (0-90)
+          if (val < 0 || val > 90) {
+            parser
+                .addError("Error semántico: Valor fuera de rango para 'garra': " + val + " (rango permitido: [0..90])");
+          }
+
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("llamada_metodo", 6,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 3)),
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), RESULT);
+        }
+          return CUP$parser$result;
+
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 18: // llamada_metodo ::= VELOCIDAD PARENTESIS_A NUMERO PARENTESIS_C
+        {
+          Object RESULT = null;
+          int valleft = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 1)).left;
+          int valright = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 1)).right;
+          Integer val = (Integer) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 1)).value;
+
+          // Validar rango para velocidad (1-100)
+          if (val < 1 || val > 100) {
+            parser.addError(
+                "Error semántico: Valor fuera de rango para 'velocidad': " + val + " (rango permitido: [1..100])");
+          }
+
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("llamada_metodo", 6,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 3)),
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), RESULT);
+        }
+          return CUP$parser$result;
+
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 19: // llamada_metodo ::= ABRIR_GARRA PARENTESIS_A PARENTESIS_C
+        {
+          Object RESULT = null;
+
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("llamada_metodo", 6,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)),
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), RESULT);
+        }
+          return CUP$parser$result;
+
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 20: // llamada_metodo ::= CERRAR_GARRA PARENTESIS_A PARENTESIS_C
+        {
+          Object RESULT = null;
+
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("llamada_metodo", 6,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)),
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), RESULT);
+        }
+          return CUP$parser$result;
+
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 21: // llamada_metodo ::= INICIAR
+        {
+          Object RESULT = null;
+
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("llamada_metodo", 6,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), ((java_cup.runtime.Symbol) CUP$parser$stack.peek()),
+              RESULT);
+        }
+          return CUP$parser$result;
+
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 22: // llamada_metodo ::= DETENER
+        {
+          Object RESULT = null;
+
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("llamada_metodo", 6,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), ((java_cup.runtime.Symbol) CUP$parser$stack.peek()),
+              RESULT);
+        }
+          return CUP$parser$result;
+
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 23: // bloque_repeticion ::= REPETIR PARENTESIS_A NUMERO PARENTESIS_C LLAVE_A
+                 // instrucciones_repeticion LLAVE_C
+        {
+          Object RESULT = null;
+          int numleft = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 4)).left;
+          int numright = ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 4)).right;
+          Integer num = (Integer) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 4)).value;
+
+          // Validar que el número de repeticiones sea positivo
+          if (num <= 0) {
+            parser.addError("Error semántico: El número de repeticiones debe ser positivo, se encontró: " + num);
+          }
+
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("bloque_repeticion", 7,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 6)),
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), RESULT);
+        }
+          return CUP$parser$result;
+
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 24: // instrucciones_repeticion ::= instrucciones
+        {
+          Object RESULT = null;
+
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("instrucciones_repeticion", 8,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), ((java_cup.runtime.Symbol) CUP$parser$stack.peek()),
+              RESULT);
+        }
+          return CUP$parser$result;
+
+        /* . . . . . . . . . . . . . . . . . . . . */
+        case 25: // instrucciones_repeticion ::=
+        {
+          Object RESULT = null;
+
+          CUP$parser$result = parser.getSymbolFactory().newSymbol("instrucciones_repeticion", 8,
+              ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), RESULT);
+        }
+          return CUP$parser$result;
+
+        /* . . . . . . */
+        default:
+          throw new Exception(
+              "Invalid action number " + CUP$parser$act_num + "found in internal parse table");
+
+      }
     } /* end of method */
 
-  /** Method splitting the generated action code into several parts. */
-  public final java_cup.runtime.Symbol CUP$parser$do_action(
-    int                        CUP$parser$act_num,
-    java_cup.runtime.lr_parser CUP$parser$parser,
-    java.util.Stack            CUP$parser$stack,
-    int                        CUP$parser$top)
-    throws java.lang.Exception
-    {
-              return CUP$parser$do_action_part00000000(
-                               CUP$parser$act_num,
-                               CUP$parser$parser,
-                               CUP$parser$stack,
-                               CUP$parser$top);
+    /** Method splitting the generated action code into several parts. */
+    public final java_cup.runtime.Symbol CUP$parser$do_action(
+        int CUP$parser$act_num,
+        java_cup.runtime.lr_parser CUP$parser$parser,
+        java.util.Stack CUP$parser$stack,
+        int CUP$parser$top)
+        throws java.lang.Exception {
+      return CUP$parser$do_action_part00000000(
+          CUP$parser$act_num,
+          CUP$parser$parser,
+          CUP$parser$stack,
+          CUP$parser$top);
     }
-}
+  }
 
 }
