@@ -1,5 +1,3 @@
-package analizadorRobot;
-
 /**
  * Clase que representa un token en el análisis léxico
  */
