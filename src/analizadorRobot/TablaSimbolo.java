@@ -121,15 +121,15 @@ public class TablaSimbolo {
         metodos = new HashMap<>();
 
         // Añadir métodos predefinidos con sus rangos
-        addMethod("base", 1, 0, 360);
-        addMethod("cuerpo", 1, 0, 180);
-        addMethod("garra", 1, 0, 90);
-        addMethod("velocidad", 1, 1, 100);
-        addMethod("abrirGarra", 0, 0, 0);
-        addMethod("cerrarGarra", 0, 0, 0);
-        addMethod("repetir", 1, 1, Integer.MAX_VALUE);
-        addMethod("iniciar", 0, 0, 0);
-        addMethod("detener", 0, 0, 0);
+        agregarMetodo("base", 1, 0, 360);
+        agregarMetodo("cuerpo", 1, 0, 180);
+        agregarMetodo("garra", 1, 0, 90);
+        agregarMetodo("velocidad", 1, 1, 100);
+        agregarMetodo("abrirGarra", 0, 0, 0);
+        agregarMetodo("cerrarGarra", 0, 0, 0);
+        agregarMetodo("repetir", 1, 1, Integer.MAX_VALUE);
+        agregarMetodo("iniciar", 0, 0, 0);
+        agregarMetodo("detener", 0, 0, 0);
     }
 
     /**
@@ -139,7 +139,7 @@ public class TablaSimbolo {
      * @param tipo   Tipo del símbolo
      * @return true si se añadió correctamente, false si ya existía
      */
-    public boolean addSimbolo(String nombre, String tipo) {
+    public boolean agregarSimbolo(String nombre, String tipo) {
         if (!simbolos.containsKey(nombre)) {
             simbolos.put(nombre, new SimboloInfo(nombre, tipo));
             return true;
@@ -156,7 +156,7 @@ public class TablaSimbolo {
      * @param columna Columna donde se definió
      * @return true si se añadió correctamente, false si ya existía
      */
-    public boolean addSimbolo(String nombre, String tipo, int linea, int columna) {
+    public boolean agregarSimbolo(String nombre, String tipo, int linea, int columna) {
         if (!simbolos.containsKey(nombre)) {
             SimboloInfo info = new SimboloInfo(nombre, tipo);
             info.setLinea(linea);
@@ -175,8 +175,8 @@ public class TablaSimbolo {
      * @param minValor      Valor mínimo permitido
      * @param maxValor      Valor máximo permitido
      */
-    private void addMethod(String nombre, int numParametros, int minValor, int maxValor) {
-        metodos.put(nombre, new SimboloInfo(nombre, "METHOD", null, numParametros, minValor, maxValor));
+    private void agregarMetodo(String nombre, int numParametros, int minValor, int maxValor) {
+        metodos.put(nombre, new SimboloInfo(nombre, "METODO", null, numParametros, minValor, maxValor));
     }
 
     /**

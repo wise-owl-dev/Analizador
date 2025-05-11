@@ -330,7 +330,7 @@ public class parser extends java_cup.runtime.lr_parser {
           if (parser.tablaSimbolo.simboloExiste(id)) {
             parser.addError("Error semántico: Robot '" + id + "' ya declarado anteriormente");
           } else {
-            parser.tablaSimbolo.addSimbolo(id, "ROBOT", idleft, idright);
+            parser.tablaSimbolo.agregarSimbolo(id, "ROBOT", idleft, idright);
           }
 
           CUP$parser$result = parser.getSymbolFactory().newSymbol("declaracion_robot", 3,
