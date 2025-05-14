@@ -43,8 +43,7 @@ public class TablaSimbolo {
         }
 
         public SimboloInfo(String nombre, String tipo, Object valor, int numParametros, int minValor, int maxValor,
-                int linea,
-                int columna) {
+                int linea, int columna) {
             this.nombre = nombre;
             this.tipo = tipo;
             this.valor = valor;
@@ -159,8 +158,8 @@ public class TablaSimbolo {
     public boolean agregarSimbolo(String nombre, String tipo, int linea, int columna) {
         if (!simbolos.containsKey(nombre)) {
             SimboloInfo info = new SimboloInfo(nombre, tipo);
-            info.setLinea(linea);
-            info.setColumna(columna);
+            info.setLinea(linea + 1); // Ajustando a base 1 para mostrar líneas desde 1, no 0
+            info.setColumna(columna + 1); // Ajustando a base 1
             simbolos.put(nombre, info);
             return true;
         }

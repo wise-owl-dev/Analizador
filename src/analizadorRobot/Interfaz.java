@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 import javax.swing.text.*;
+
 import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -540,6 +541,10 @@ public class Interfaz extends JFrame {
             ArrayList<String> errores = parser.getErrores();
             TablaSimbolo tablaSimbolo = parser.getTablaSimbolo();
 
+            // Añadir errores por robots duplicados
+            ArrayList<String> erroresDuplicados = tablaSimbolo.findDuplicateRobots();
+            errores.addAll(erroresDuplicados);
+
             // Mostrar errores en el área de texto y resaltar en el editor
             if (!errores.isEmpty()) {
                 // Si ya hay errores léxicos, agregar una separación
@@ -857,58 +862,13 @@ public class Interfaz extends JFrame {
             modeloSimbolos.removeRow(0);
         }
 
-        // Primero agregar los métodos en orden alfabético
-        String[] metodosOrdenados = {
-                "abrirGarra", "base", "cerrarGarra", "cuerpo",
-                "detener", "garra", "iniciar", "repetir", "velocidad"
-        };
-
-        for (String nombreMetodo : metodosOrdenados) {
-            for (TablaSimbolo.SimboloInfo metodo : tablaSimbolo.getMetodos()) {
-                if (metodo.getNombre().equals(nombreMetodo)) {
-                    // Determinar el rango correcto
-                    String rangoStr = "";
-                    if (metodo.getNumParametros() > 0) {
-                        switch (nombreMetodo) {
-                            case "base":
-                                rangoStr = "[0..360]";
-                                break;
-                            case "cuerpo":
-                                rangoStr = "[0..180]";
-                                break;
-                            case "garra":
-                                rangoStr = "[0..90]";
-                                break;
-                            case "velocidad":
-                                rangoStr = "[1..100]";
-                                break;
-                            case "repetir":
-                                rangoStr = "[1..∞)";
-                                break;
-                        }
-                    }
-
-                    modeloSimbolos.addRow(new Object[] {
-                            metodo.getNombre(),
-                            "METODO",
-                            "", // No mostramos valor para métodos
-                            metodo.getNumParametros(),
-                            rangoStr,
-                            0, // Línea 0 para métodos predefinidos
-                            0 // Columna 0 para métodos predefinidos
-                    });
-                    break;
-                }
-            }
-        }
-
-        // Después agregar los robots definidos por el usuario
+        // Primer paso: robots declarados
         for (TablaSimbolo.SimboloInfo simbolo : tablaSimbolo.getSimbolos()) {
             if (simbolo.getTipo().equals("ROBOT")) {
                 modeloSimbolos.addRow(new Object[] {
                         simbolo.getNombre(),
                         simbolo.getTipo(),
-                        "", // Sin valor para robots
+                        simbolo.getValor() != null ? simbolo.getValor().toString() : "",
                         0, // Sin parámetros para robots
                         "", // Sin rango para robots
                         simbolo.getLinea(),
@@ -917,14 +877,174 @@ public class Interfaz extends JFrame {
             }
         }
 
-        // Ajustar el ancho de las columnas de manera más precisa
+        // Mapeo de nombres de métodos correctos
+        String[] metodosValidos = {
+                "abrirGarra", "base", "cerrarGarra", "cuerpo",
+                "detener", "garra", "iniciar", "repetir", "velocidad"
+        };
+
+        // Mapa para almacenar los métodos y sus valores
+        HashMap<String, String> metodosValores = new HashMap<>();
+        // Mapa para almacenar posiciones de métodos
+        HashMap<String, int[]> posicionesMetodos = new HashMap<>();
+        // Mapa para almacenar si un método tiene parámetros
+        HashMap<String, Boolean> metodosConParametros = new HashMap<>();
+
+        // Buscar métodos y sus valores directamente en el código
+        procesarCodigoParaMetodos(metodosValidos, metodosValores, posicionesMetodos, metodosConParametros);
+
+        // Agregar métodos encontrados a la tabla
+        for (String nombreMetodo : metodosValidos) {
+            if (posicionesMetodos.containsKey(nombreMetodo)) {
+                int[] posicion = posicionesMetodos.get(nombreMetodo);
+                int linea = posicion[0];
+                int columna = posicion[1];
+                boolean tieneParametros = metodosConParametros.getOrDefault(nombreMetodo, false);
+                String valor = metodosValores.getOrDefault(nombreMetodo, "");
+
+                // Determinar el rango según el tipo de método
+                String rangoStr = "";
+                int numParametros = tieneParametros ? 1 : 0;
+
+                switch (nombreMetodo) {
+                    case "base":
+                        rangoStr = "[0..360]";
+                        break;
+                    case "cuerpo":
+                        rangoStr = "[0..180]";
+                        break;
+                    case "garra":
+                        rangoStr = "[0..90]";
+                        break;
+                    case "velocidad":
+                        rangoStr = "[1..100]";
+                        break;
+                    case "repetir":
+                        rangoStr = "[1..∞)";
+                        break;
+                }
+
+                modeloSimbolos.addRow(new Object[] {
+                        nombreMetodo,
+                        "METODO",
+                        valor, // Mostrar el valor si existe
+                        numParametros,
+                        rangoStr,
+                        linea,
+                        columna
+                });
+            }
+        }
+
+        // Ajustar el ancho de las columnas
         tablaSimbolos.getColumnModel().getColumn(0).setPreferredWidth(80); // Nombre
         tablaSimbolos.getColumnModel().getColumn(1).setPreferredWidth(70); // Tipo
-        tablaSimbolos.getColumnModel().getColumn(2).setPreferredWidth(50); // Valor (vacío)
+        tablaSimbolos.getColumnModel().getColumn(2).setPreferredWidth(50); // Valor
         tablaSimbolos.getColumnModel().getColumn(3).setPreferredWidth(80); // Parámetros
         tablaSimbolos.getColumnModel().getColumn(4).setPreferredWidth(80); // Rango
         tablaSimbolos.getColumnModel().getColumn(5).setPreferredWidth(50); // Línea
         tablaSimbolos.getColumnModel().getColumn(6).setPreferredWidth(65); // Columna
+    }
+
+    /**
+     * Procesa el código para encontrar métodos y sus valores
+     */
+    private void procesarCodigoParaMetodos(String[] metodosValidos, HashMap<String, String> metodosValores,
+            HashMap<String, int[]> posicionesMetodos, HashMap<String, Boolean> metodosConParametros) {
+
+        // Preparar un conjunto de métodos válidos para búsqueda rápida
+        HashSet<String> metodosBuscados = new HashSet<>(Arrays.asList(metodosValidos));
+
+        String codigo = editorCodigo.getText();
+        String[] lineas = codigo.split("\n");
+
+        for (int i = 0; i < lineas.length; i++) {
+            String linea = lineas[i];
+
+            // Buscar asignaciones: r1.base = 90
+            Pattern patternAsign = Pattern.compile("([a-zA-Z0-9_]+)\\.([a-zA-Z0-9_]+)\\s*=\\s*([0-9.]+)");
+            Matcher matcherAsign = patternAsign.matcher(linea);
+
+            while (matcherAsign.find()) {
+                String metodo = matcherAsign.group(2);
+                String valor = matcherAsign.group(3);
+
+                // Solo procesar si es un método válido
+                if (metodosBuscados.contains(metodo)) {
+                    // Guardar valor
+                    metodosValores.put(metodo, valor);
+
+                    // Guardar posición si aún no está registrada
+                    if (!posicionesMetodos.containsKey(metodo)) {
+                        posicionesMetodos.put(metodo, new int[] { i + 1, matcherAsign.start(2) + 1 });
+                    }
+
+                    // Marcar como con parámetros
+                    metodosConParametros.put(metodo, true);
+                }
+            }
+
+            // Buscar llamadas con paréntesis: r1.base(180)
+            Pattern patternParam = Pattern.compile("([a-zA-Z0-9_]+)\\.([a-zA-Z0-9_]+)\\s*\\(([^)]+)\\)");
+            Matcher matcherParam = patternParam.matcher(linea);
+
+            while (matcherParam.find()) {
+                String metodo = matcherParam.group(2);
+                String paramStr = matcherParam.group(3).trim();
+
+                // Solo procesar si es un método válido
+                if (metodosBuscados.contains(metodo)) {
+                    // Si no hay valor previo (de asignación), usar el parámetro como valor
+                    if (!metodosValores.containsKey(metodo)) {
+                        metodosValores.put(metodo, paramStr);
+                    }
+
+                    // Guardar posición si aún no está registrada
+                    if (!posicionesMetodos.containsKey(metodo)) {
+                        posicionesMetodos.put(metodo, new int[] { i + 1, matcherParam.start(2) + 1 });
+                    }
+
+                    // Marcar como con parámetros
+                    metodosConParametros.put(metodo, true);
+                }
+            }
+
+            // Buscar llamadas sin parámetros: r1.iniciar
+            Pattern patternNoParam = Pattern.compile("([a-zA-Z0-9_]+)\\.([a-zA-Z0-9_]+)(?!\\s*[=\\(])");
+            Matcher matcherNoParam = patternNoParam.matcher(linea);
+
+            while (matcherNoParam.find()) {
+                String metodo = matcherNoParam.group(2);
+
+                // Solo procesar si es un método válido y no se ha encontrado antes
+                if (metodosBuscados.contains(metodo) && !posicionesMetodos.containsKey(metodo)) {
+                    // Guardar posición
+                    posicionesMetodos.put(metodo, new int[] { i + 1, matcherNoParam.start(2) + 1 });
+
+                    // Marcar como sin parámetros
+                    metodosConParametros.put(metodo, false);
+                }
+            }
+
+            // Buscar llamadas con paréntesis vacíos: r1.abrirGarra()
+            Pattern patternEmpty = Pattern.compile("([a-zA-Z0-9_]+)\\.([a-zA-Z0-9_]+)\\s*\\(\\)");
+            Matcher matcherEmpty = patternEmpty.matcher(linea);
+
+            while (matcherEmpty.find()) {
+                String metodo = matcherEmpty.group(2);
+
+                // Solo procesar si es un método válido
+                if (metodosBuscados.contains(metodo)) {
+                    // Guardar posición si aún no está registrada
+                    if (!posicionesMetodos.containsKey(metodo)) {
+                        posicionesMetodos.put(metodo, new int[] { i + 1, matcherEmpty.start(2) + 1 });
+                    }
+
+                    // Marcar como con parámetros (aunque vacíos)
+                    metodosConParametros.put(metodo, true);
+                }
+            }
+        }
     }
 
     /**
@@ -1027,7 +1147,7 @@ public class Interfaz extends JFrame {
         }
 
         SwingUtilities.invokeLater(() -> {
-            AnalizadorRobotUI app = new AnalizadorRobotUI();
+            Interfaz app = new Interfaz();
             app.setVisible(true);
         });
     }

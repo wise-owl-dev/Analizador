@@ -326,9 +326,10 @@ public class parser extends java_cup.runtime.lr_parser {
           int idright = ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).right;
           String id = (String) ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 
-          // Añadir robot a la tabla de símbolos
+          // Añadir robot a la tabla de símbolos con línea y columna correctas
           if (parser.tablaSimbolo.simboloExiste(id)) {
-            parser.addError("Error semántico: Robot '" + id + "' ya declarado anteriormente");
+            parser.addError("Error semántico en línea " + (idleft + 1) + ", columna " + (idright + 1) +
+                ": Robot '" + id + "' ya declarado anteriormente");
           } else {
             parser.tablaSimbolo.agregarSimbolo(id, "ROBOT", idleft, idright);
           }
@@ -349,7 +350,8 @@ public class parser extends java_cup.runtime.lr_parser {
 
           // Verificar si el robot existe
           if (!parser.tablaSimbolo.simboloExiste(id)) {
-            parser.addError("Error semántico: Robot '" + id + "' no declarado");
+            parser.addError("Error semántico en línea " + (idleft + 1) + ", columna " + (idright + 1) +
+                ": Robot '" + id + "' no declarado");
           }
 
           CUP$parser$result = parser.getSymbolFactory().newSymbol("accion_robot", 4,
@@ -368,7 +370,8 @@ public class parser extends java_cup.runtime.lr_parser {
 
           // Verificar si el robot existe
           if (!parser.tablaSimbolo.simboloExiste(id)) {
-            parser.addError("Error semántico: Robot '" + id + "' no declarado");
+            parser.addError("Error semántico en línea " + (idleft + 1) + ", columna " + (idright + 1) +
+                ": Robot '" + id + "' no declarado");
           }
 
           CUP$parser$result = parser.getSymbolFactory().newSymbol("accion_robot", 4,
@@ -387,7 +390,8 @@ public class parser extends java_cup.runtime.lr_parser {
 
           // Verificar si el robot existe
           if (!parser.tablaSimbolo.simboloExiste(id)) {
-            parser.addError("Error semántico: Robot '" + id + "' no declarado");
+            parser.addError("Error semántico en línea " + (idleft + 1) + ", columna " + (idright + 1) +
+                ": Robot '" + id + "' no declarado");
           }
 
           CUP$parser$result = parser.getSymbolFactory().newSymbol("accion_robot", 4,
@@ -406,8 +410,8 @@ public class parser extends java_cup.runtime.lr_parser {
 
           // Validar rango para base (0-360)
           if (val < 0 || val > 360) {
-            parser
-                .addError("Error semántico: Valor fuera de rango para 'base': " + val + " (rango permitido: [0..360])");
+            parser.addError("Error semántico en línea " + (valleft + 1) + ", columna " + (valright + 1) +
+                ": Valor fuera de rango para 'base': " + val + " (rango permitido: [0..360])");
           }
 
           CUP$parser$result = parser.getSymbolFactory().newSymbol("asignacion_parametro", 5,
@@ -426,8 +430,8 @@ public class parser extends java_cup.runtime.lr_parser {
 
           // Validar rango para cuerpo (0-180)
           if (val < 0 || val > 180) {
-            parser.addError(
-                "Error semántico: Valor fuera de rango para 'cuerpo': " + val + " (rango permitido: [0..180])");
+            parser.addError("Error semántico en línea " + (valleft + 1) + ", columna " + (valright + 1) +
+                ": Valor fuera de rango para 'cuerpo': " + val + " (rango permitido: [0..180])");
           }
 
           CUP$parser$result = parser.getSymbolFactory().newSymbol("asignacion_parametro", 5,
@@ -446,8 +450,8 @@ public class parser extends java_cup.runtime.lr_parser {
 
           // Validar rango para garra (0-90)
           if (val < 0 || val > 90) {
-            parser
-                .addError("Error semántico: Valor fuera de rango para 'garra': " + val + " (rango permitido: [0..90])");
+            parser.addError("Error semántico en línea " + (valleft + 1) + ", columna " + (valright + 1) +
+                ": Valor fuera de rango para 'garra': " + val + " (rango permitido: [0..90])");
           }
 
           CUP$parser$result = parser.getSymbolFactory().newSymbol("asignacion_parametro", 5,
@@ -466,8 +470,8 @@ public class parser extends java_cup.runtime.lr_parser {
 
           // Validar rango para velocidad (1-100)
           if (val < 1 || val > 100) {
-            parser.addError(
-                "Error semántico: Valor fuera de rango para 'velocidad': " + val + " (rango permitido: [1..100])");
+            parser.addError("Error semántico en línea " + (valleft + 1) + ", columna " + (valright + 1) +
+                ": Valor fuera de rango para 'velocidad': " + val + " (rango permitido: [1..100])");
           }
 
           CUP$parser$result = parser.getSymbolFactory().newSymbol("asignacion_parametro", 5,
@@ -486,8 +490,8 @@ public class parser extends java_cup.runtime.lr_parser {
 
           // Validar rango para base (0-360)
           if (val < 0 || val > 360) {
-            parser
-                .addError("Error semántico: Valor fuera de rango para 'base': " + val + " (rango permitido: [0..360])");
+            parser.addError("Error semántico en línea " + (valleft + 1) + ", columna " + (valright + 1) +
+                ": Valor fuera de rango para 'base': " + val + " (rango permitido: [0..360])");
           }
 
           CUP$parser$result = parser.getSymbolFactory().newSymbol("llamada_metodo", 6,
@@ -506,8 +510,8 @@ public class parser extends java_cup.runtime.lr_parser {
 
           // Validar rango para cuerpo (0-180)
           if (val < 0 || val > 180) {
-            parser.addError(
-                "Error semántico: Valor fuera de rango para 'cuerpo': " + val + " (rango permitido: [0..180])");
+            parser.addError("Error semántico en línea " + (valleft + 1) + ", columna " + (valright + 1) +
+                ": Valor fuera de rango para 'cuerpo': " + val + " (rango permitido: [0..180])");
           }
 
           CUP$parser$result = parser.getSymbolFactory().newSymbol("llamada_metodo", 6,
@@ -526,8 +530,8 @@ public class parser extends java_cup.runtime.lr_parser {
 
           // Validar rango para garra (0-90)
           if (val < 0 || val > 90) {
-            parser
-                .addError("Error semántico: Valor fuera de rango para 'garra': " + val + " (rango permitido: [0..90])");
+            parser.addError("Error semántico en línea " + (valleft + 1) + ", columna " + (valright + 1) +
+                ": Valor fuera de rango para 'garra': " + val + " (rango permitido: [0..90])");
           }
 
           CUP$parser$result = parser.getSymbolFactory().newSymbol("llamada_metodo", 6,
@@ -546,8 +550,8 @@ public class parser extends java_cup.runtime.lr_parser {
 
           // Validar rango para velocidad (1-100)
           if (val < 1 || val > 100) {
-            parser.addError(
-                "Error semántico: Valor fuera de rango para 'velocidad': " + val + " (rango permitido: [1..100])");
+            parser.addError("Error semántico en línea " + (valleft + 1) + ", columna " + (valright + 1) +
+                ": Valor fuera de rango para 'velocidad': " + val + " (rango permitido: [1..100])");
           }
 
           CUP$parser$result = parser.getSymbolFactory().newSymbol("llamada_metodo", 6,
@@ -611,7 +615,8 @@ public class parser extends java_cup.runtime.lr_parser {
 
           // Validar que el número de repeticiones sea positivo
           if (num <= 0) {
-            parser.addError("Error semántico: El número de repeticiones debe ser positivo, se encontró: " + num);
+            parser.addError("Error semántico en línea " + (numleft + 1) + ", columna " + (numright + 1) +
+                ": El número de repeticiones debe ser positivo, se encontró: " + num);
           }
 
           CUP$parser$result = parser.getSymbolFactory().newSymbol("bloque_repeticion", 7,

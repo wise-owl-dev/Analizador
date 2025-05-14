@@ -85,11 +85,12 @@ instruccion ::= declaracion_robot
 
 declaracion_robot ::= ROBOT IDENTIFICADOR:id
                      {:
-                         // Añadir robot a la tabla de símbolos
-                         if (parser.tablaSimbolo.symbolExists(id)) {
-                             parser.addError("Error semántico: Robot '" + id + "' ya declarado anteriormente");
+                         // Añadir robot a la tabla de símbolos con línea y columna correctas
+                         if (parser.tablaSimbolo.simboloExiste(id)) {
+                             parser.addError("Error semántico en línea " + (idleft+1) + ", columna " + (idright+1) + 
+                                            ": Robot '" + id + "' ya declarado anteriormente");
                          } else {
-                             parser.tablaSimbolo.addSymbol(id, "ROBOT", idleft, idright);
+                             parser.tablaSimbolo.agregarSimbolo(id, "ROBOT", idleft, idright);
                          }
                      :}
                      ;
@@ -97,22 +98,25 @@ declaracion_robot ::= ROBOT IDENTIFICADOR:id
 accion_robot ::= IDENTIFICADOR:id PUNTO llamada_metodo
                {:
                    // Verificar si el robot existe
-                   if (!parser.tablaSimbolo.symbolExists(id)) {
-                       parser.addError("Error semántico: Robot '" + id + "' no declarado");
+                   if (!parser.tablaSimbolo.simboloExiste(id)) {
+                       parser.addError("Error semántico en línea " + (idleft+1) + ", columna " + (idright+1) + 
+                                      ": Robot '" + id + "' no declarado");
                    }
                :}
                | IDENTIFICADOR:id PUNTO asignacion_parametro
                {:
                    // Verificar si el robot existe
-                   if (!parser.tablaSimbolo.symbolExists(id)) {
-                       parser.addError("Error semántico: Robot '" + id + "' no declarado");
+                   if (!parser.tablaSimbolo.simboloExiste(id)) {
+                       parser.addError("Error semántico en línea " + (idleft+1) + ", columna " + (idright+1) + 
+                                      ": Robot '" + id + "' no declarado");
                    }
                :}
                | IDENTIFICADOR:id PUNTO bloque_repeticion
                {:
                    // Verificar si el robot existe
-                   if (!parser.tablaSimbolo.symbolExists(id)) {
-                       parser.addError("Error semántico: Robot '" + id + "' no declarado");
+                   if (!parser.tablaSimbolo.simboloExiste(id)) {
+                       parser.addError("Error semántico en línea " + (idleft+1) + ", columna " + (idright+1) + 
+                                      ": Robot '" + id + "' no declarado");
                    }
                :}
                ;
@@ -121,28 +125,32 @@ asignacion_parametro ::= BASE IGUAL NUMERO:val
                        {:
                            // Validar rango para base (0-360)
                            if (val < 0 || val > 360) {
-                               parser.addError("Error semántico: Valor fuera de rango para 'base': " + val + " (rango permitido: [0..360])");
+                               parser.addError("Error semántico en línea " + (valleft+1) + ", columna " + (valright+1) + 
+                                              ": Valor fuera de rango para 'base': " + val + " (rango permitido: [0..360])");
                            }
                        :}
                        | CUERPO IGUAL NUMERO:val
                        {:
                            // Validar rango para cuerpo (0-180)
                            if (val < 0 || val > 180) {
-                               parser.addError("Error semántico: Valor fuera de rango para 'cuerpo': " + val + " (rango permitido: [0..180])");
+                               parser.addError("Error semántico en línea " + (valleft+1) + ", columna " + (valright+1) + 
+                                              ": Valor fuera de rango para 'cuerpo': " + val + " (rango permitido: [0..180])");
                            }
                        :}
                        | GARRA IGUAL NUMERO:val
                        {:
                            // Validar rango para garra (0-90)
                            if (val < 0 || val > 90) {
-                               parser.addError("Error semántico: Valor fuera de rango para 'garra': " + val + " (rango permitido: [0..90])");
+                               parser.addError("Error semántico en línea " + (valleft+1) + ", columna " + (valright+1) + 
+                                              ": Valor fuera de rango para 'garra': " + val + " (rango permitido: [0..90])");
                            }
                        :}
                        | VELOCIDAD IGUAL NUMERO:val
                        {:
                            // Validar rango para velocidad (1-100)
                            if (val < 1 || val > 100) {
-                               parser.addError("Error semántico: Valor fuera de rango para 'velocidad': " + val + " (rango permitido: [1..100])");
+                               parser.addError("Error semántico en línea " + (valleft+1) + ", columna " + (valright+1) + 
+                                              ": Valor fuera de rango para 'velocidad': " + val + " (rango permitido: [1..100])");
                            }
                        :}
                        ;
@@ -151,28 +159,32 @@ llamada_metodo ::= BASE PARENTESIS_A NUMERO:val PARENTESIS_C
                  {:
                      // Validar rango para base (0-360)
                      if (val < 0 || val > 360) {
-                         parser.addError("Error semántico: Valor fuera de rango para 'base': " + val + " (rango permitido: [0..360])");
+                         parser.addError("Error semántico en línea " + (valleft+1) + ", columna " + (valright+1) + 
+                                        ": Valor fuera de rango para 'base': " + val + " (rango permitido: [0..360])");
                      }
                  :}
                  | CUERPO PARENTESIS_A NUMERO:val PARENTESIS_C
                  {:
                      // Validar rango para cuerpo (0-180)
                      if (val < 0 || val > 180) {
-                         parser.addError("Error semántico: Valor fuera de rango para 'cuerpo': " + val + " (rango permitido: [0..180])");
+                         parser.addError("Error semántico en línea " + (valleft+1) + ", columna " + (valright+1) + 
+                                        ": Valor fuera de rango para 'cuerpo': " + val + " (rango permitido: [0..180])");
                      }
                  :}
                  | GARRA PARENTESIS_A NUMERO:val PARENTESIS_C
                  {:
                      // Validar rango para garra (0-90)
                      if (val < 0 || val > 90) {
-                         parser.addError("Error semántico: Valor fuera de rango para 'garra': " + val + " (rango permitido: [0..90])");
+                         parser.addError("Error semántico en línea " + (valleft+1) + ", columna " + (valright+1) + 
+                                        ": Valor fuera de rango para 'garra': " + val + " (rango permitido: [0..90])");
                      }
                  :}
                  | VELOCIDAD PARENTESIS_A NUMERO:val PARENTESIS_C
                  {:
                      // Validar rango para velocidad (1-100)
                      if (val < 1 || val > 100) {
-                         parser.addError("Error semántico: Valor fuera de rango para 'velocidad': " + val + " (rango permitido: [1..100])");
+                         parser.addError("Error semántico en línea " + (valleft+1) + ", columna " + (valright+1) + 
+                                        ": Valor fuera de rango para 'velocidad': " + val + " (rango permitido: [1..100])");
                      }
                  :}
                  | ABRIR_GARRA PARENTESIS_A PARENTESIS_C
@@ -185,7 +197,8 @@ bloque_repeticion ::= REPETIR PARENTESIS_A NUMERO:num PARENTESIS_C LLAVE_A instr
                     {:
                         // Validar que el número de repeticiones sea positivo
                         if (num <= 0) {
-                            parser.addError("Error semántico: El número de repeticiones debe ser positivo, se encontró: " + num);
+                            parser.addError("Error semántico en línea " + (numleft+1) + ", columna " + (numright+1) + 
+                                           ": El número de repeticiones debe ser positivo, se encontró: " + num);
                         }
                     :}
                     ;
